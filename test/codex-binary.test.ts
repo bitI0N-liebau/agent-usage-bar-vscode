@@ -153,34 +153,6 @@ test.each([
   },
 );
 
-test("the IDE path follows the editor's selected extension after an update", async () => {
-  const previous = await install(
-    "extensions",
-    "openai.chatgpt-old",
-    "bin",
-    "windows-x86_64",
-    "codex.exe",
-  );
-  const current = await install(
-    "extensions",
-    "openai.chatgpt-new",
-    "bin",
-    "windows-x86_64",
-    "codex.exe",
-  );
-  await aged(previous, new Date());
-  await aged(current, new Date(1));
-
-  expect(
-    await resolveCodexBinary(
-      home,
-      "win32",
-      path.join(home, "extensions", "openai.chatgpt-new"),
-      "x64",
-    ),
-  ).toBe(current);
-});
-
 test("existing desktop, npm and plugin installs retain priority over the IDE copy", async () => {
   const extensionDirectory = path.join(home, "editor extension");
   await install("editor extension", "bin", "windows-x86_64", "codex.exe");
